@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Healthcare Chatbot Login</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body class="login-page">
+  <div class="page-background"></div>
+  <div class="page-wrapper fade-in">
+    <div class="auth-card glass-card">
+      <div class="brand-block">
+        <div class="brand-mark">AI</div>
+        <div>
+          <h1>AI Healthcare Chatbot</h1>
+          <p>Secure access for healthcare predictions and chatbot support.</p>
+        </div>
+      </div>
+
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <div class="alert">{{ messages[0] }}</div>
+        {% endif %}
+      {% endwith %}
+
+      <form action="{{ url_for('login') }}" method="post" class="auth-form">
+        <div class="input-group">
+          <span class="input-icon">👤</span>
+          <input type="text" name="username" placeholder="Username" autocomplete="username" required />
+        </div>
+
+        <div class="input-group">
+          <span class="input-icon">🔒</span>
+          <input type="password" name="password" placeholder="Password" autocomplete="current-password" required />
+        </div>
+
+        <button type="submit" class="btn-primary">Login</button>
+
+        <div class="helper-row">
+          <span>New here? <a href="{{ url_for('register') }}" class="text-link">Create account</a></span>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

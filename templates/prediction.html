@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <section class="section-panel glass-card form-card">
+    <p class="card-label">Disease Prediction</p>
+    <h2>Enter symptoms for a prediction</h2>
+    <p>Submit multiple symptoms in plain language, and the AI assistant will estimate the most likely disease.</p>
+
+    <form id="prediction-form" class="form-grid">
+      <div class="input-group">
+        <span class="input-icon">🩺</span>
+        <input id="symptoms-input" type="text" name="symptoms" placeholder="e.g. fever, cough, sore throat" autocomplete="off" required />
+      </div>
+      <button type="submit" class="btn-primary">Predict Disease</button>
+    </form>
+
+    <div id="prediction-result" class="result-panel"></div>
+  </section>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ url_for('static', filename='js/predict.js') }}"></script>
+{% endblock %}

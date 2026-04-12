@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ page_title }} — AI Healthcare</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  {% block head %}{% endblock %}
+</head>
+<body class="dashboard-page">
+  <div class="page-background"></div>
+
+  <div class="dashboard-shell fade-in">
+    <aside class="sidebar glass-card">
+      <div class="sidebar-brand">
+        <div class="brand-mark small">AI</div>
+        <div>
+          <h2>AI Healthcare</h2>
+          <p>Assistant Dashboard</p>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a class="nav-link {% if current_page == 'dashboard' %}active{% endif %}" href="{{ url_for('dashboard') }}">Home</a>
+        <a class="nav-link {% if current_page == 'chat' %}active{% endif %}" href="{{ url_for('chat') }}">Chatbot</a>
+        <a class="nav-link {% if current_page == 'prediction' %}active{% endif %}" href="{{ url_for('prediction') }}">Disease Prediction</a>
+        <a class="nav-link {% if current_page == 'history' %}active{% endif %}" href="{{ url_for('history') }}">History</a>
+        <a class="nav-link {% if current_page == 'analytics' %}active{% endif %}" href="{{ url_for('analytics') }}">Analytics</a>
+        <a class="nav-link {% if current_page == 'vaccine' %}active{% endif %}" href="{{ url_for('vaccine') }}">Vaccine Info</a>
+        <a class="nav-link {% if current_page == 'profile' %}active{% endif %}" href="{{ url_for('profile') }}">Profile</a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <span>Signed in as</span>
+        <strong>{{ username }}</strong>
+        <a class="btn-ghost" href="{{ url_for('logout') }}">Logout</a>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar glass-card">
+        <div>
+          <p class="eyebrow">{{ section_title }}</p>
+          <h1>{{ page_title }}</h1>
+        </div>
+      </header>
+
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <div class="alert">{{ messages[0] }}</div>
+        {% endif %}
+      {% endwith %}
+
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>

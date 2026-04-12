@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create Account — AI Healthcare</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body class="login-page">
+  <div class="page-background"></div>
+  <div class="page-wrapper fade-in">
+    <div class="auth-card glass-card">
+      <div class="brand-block">
+        <div class="brand-mark">AI</div>
+        <div>
+          <h1>Create account</h1>
+          <p>Securely register to use the healthcare prediction dashboard.</p>
+        </div>
+      </div>
+
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <div class="alert">{{ messages[0] }}</div>
+        {% endif %}
+      {% endwith %}
+
+      <form action="{{ url_for('register') }}" method="post" class="auth-form">
+        <div class="input-group">
+          <span class="input-icon">👤</span>
+          <input type="text" name="username" placeholder="Username" autocomplete="username" required />
+        </div>
+
+        <div class="input-group">
+          <span class="input-icon">🔒</span>
+          <input type="password" name="password" placeholder="Password" autocomplete="new-password" required />
+        </div>
+
+        <div class="input-group">
+          <span class="input-icon">🔒</span>
+          <input type="password" name="confirm_password" placeholder="Confirm Password" autocomplete="new-password" required />
+        </div>
+
+        <button type="submit" class="btn-primary">Register</button>
+
+        <div class="helper-row">
+          <span>Already registered? <a href="{{ url_for('login') }}" class="text-link">Login now</a></span>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

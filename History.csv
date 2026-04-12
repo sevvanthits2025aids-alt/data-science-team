@@ -1,0 +1,22 @@
+username,symptoms,predicted_disease,confidence,risk_level,timestamp
+sevvanthi,"gradually increasing weakness fatigue headache loss of appetite abdominal stomach pain, high fever often 39 40 c",Allergy,0%,Low,2026-04-10 14:25:09
+sevvanthi,"gradually increasing weakness fatigue headache loss of appetite abdominal stomach pain, high fever often 39 40 c",Allergy,0%,Low,2026-04-10 14:25:46
+sevvanthi,"gradually increasing weakness fatigue headache loss of appetite abdominal stomach pain, high fever often 39 40 c",Allergy,0%,Low,2026-04-10 14:26:11
+sevvanthi,"high fever sudden, up to 40 c headache pain behind eyes muscle joint pain called breakbone fever extreme fatigue",Allergy,0%,Low,2026-04-10 14:27:50
+sevvanthi,"high fever sudden, up to 40 c headache pain behind eyes muscle joint pain called breakbone fever extreme fatigue",Allergy,0%,Low,2026-04-10 14:29:20
+sevvanthi,"99 5 f chills shivering sweating headache muscle body aches fatigue or weakness, high body temperature above 37 5 c",Allergy,0%,Low,2026-04-10 14:50:45
+sevvanthi,prolonged high fever often 39 40 c weakness fatigue headache loss of appetite abdominal stomach pain,Allergy,0%,Low,2026-04-10 15:25:30
+sevvanthi,"99 5 f chills shivering sweating headache muscle body aches fatigue or weakness, high body temperature above 37 5 c",Allergy,0%,Low,2026-04-10 15:27:58
+sevvanthi,fever headache pain behind eyes joint pain skin rash fatigue,Allergy,0%,Low,2026-04-10 15:31:01
+sevvanthi,"bleeding gums, continuous vomiting, extreme weakness or restlessness, stomach pain",Influenza (Flu),0%,Low,2026-04-11 14:04:11
+sevvanthi,"fever, head ache, running nose",Influenza (Flu),17%,Low,2026-04-11 14:06:48
+sevvanthi,"continuous vomiting bleeding gums, extreme weakness or restlessness, stomach pain",Influenza (Flu),4%,Low,2026-04-11 14:32:34
+sevvanthi,"abdominal pain, bleeding gums or nose blood in vomit, continuous vomiting, or stool extreme tiredness or restlessness",Typhoid (Enteric Fever),24%,Low,2026-04-11 15:09:47
+sevvanthi,"fatigue or weakness, fever, followed by rash blisters scabs, headache, muscle body aches",Influenza (Flu),70%,Medium,2026-04-12 17:28:50
+sevvanthi,"fluid filled blisters, itchy skin rash main symptom red spots, scabs fever tiredness fatigue loss of appetite headache",Influenza (Flu),4%,Low,2026-04-12 17:44:17
+sevvanthi,"breathing difficulty, high fever, rash in eyes, weak immunity",Influenza (Flu),4%,Low,2026-04-12 17:59:31
+sevvanthi,"appetite loss, fatigue or weakness, headache, high fever, rash rose spots, stomach pain",Influenza (Flu),30%,Low,2026-04-12 18:13:10
+sevvanthi,"appetite loss, fever to tiredness, muscle body aches, weakness headache",Influenza (Flu),20%,Low,2026-04-12 18:42:26
+sevvanthi,"appetite loss, fatigue or weakness, fever to, headache, muscle body aches",Influenza (Flu),56%,Medium,2026-04-12 19:16:18
+sevvanthi,"itchy rash rash spots blisters scabs heals in about week, viral disease spreads easily fever",Influenza (Flu),4%,Low,2026-04-12 20:15:09
+sevvanthi,"body pain muscle aches extreme tiredness fatigue loss of appetite, headache, nausea, vomiting",Food Poisoning,68%,Medium,2026-04-12 21:02:50
