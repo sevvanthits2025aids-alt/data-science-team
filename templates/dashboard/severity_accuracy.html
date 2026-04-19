@@ -1,0 +1,379 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="analytics-container">
+    <!-- Header -->
+    <div class="section-panel glass-card">
+      <h2>Disease Severity vs Prediction Accuracy</h2>
+      <p>Relationship between disease severity level and AI prediction accuracy across all diseases in the dataset.</p>
+    </div>
+
+    <!-- Statistics Summary -->
+    <div class="stats-grid">
+      <div class="stat-card glass-card">
+        <div class="stat-icon">📊</div>
+        <div class="stat-content">
+          <div class="stat-label">Total Diseases</div>
+          <div class="stat-value">{{ statistics.total_diseases }}</div>
+        </div>
+      </div>
+      
+      <div class="stat-card glass-card">
+        <div class="stat-icon">💾</div>
+        <div class="stat-content">
+          <div class="stat-label">Symptom Combinations</div>
+          <div class="stat-value">{{ statistics.total_symptom_combinations }}+</div>
+        </div>
+      </div>
+      
+      <div class="stat-card glass-card">
+        <div class="stat-icon">🎯</div>
+        <div class="stat-content">
+          <div class="stat-label">Average Accuracy</div>
+          <div class="stat-value">{{ statistics.average_accuracy }}%</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Chart Section -->
+    <div class="section-panel glass-card chart-container">
+      <canvas id="severityAccuracyChart" style="max-height: 300px;"></canvas>
+    </div>
+
+    <!-- Disease Breakdown by Severity -->
+    <div class="section-panel glass-card breakdown-container">
+      <h3>Disease Breakdown by Severity Level</h3>
+      
+      <div class="severity-cards">
+        {% for item in chart_data %}
+          <div class="severity-breakdown-card">
+            <div class="severity-header">
+              <span class="severity-level">{{ item.severity }}</span>
+              <span class="accuracy-badge">{{ item.accuracy }}%</span>
+            </div>
+            
+            <div class="disease-list">
+              {% for disease in item.diseases %}
+                <span class="disease-chip">{{ disease }}</span>
+              {% endfor %}
+            </div>
+            
+            <div class="disease-count">{{ item.disease_count }} disease(s)</div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Dataset Information -->
+    <div class="section-panel glass-card info-container">
+      <h3>📋 Dataset Information</h3>
+      
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="info-title">Supported Diseases</div>
+          <div class="info-list">
+            {% for disease in statistics.diseases %}
+              <span class="info-badge">{{ disease }}</span>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <div class="dataset-note">
+        <strong>Note:</strong> This dataset contains 20-50 balanced symptom combinations per disease, 
+        cleaned and validated for medical accuracy. The prediction accuracy represents the AI model's 
+        performance on real-world symptom patterns.
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .analytics-container {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .stat-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px;
+      border-radius: 12px;
+    }
+
+    .stat-icon {
+      font-size: 32px;
+    }
+
+    .stat-content {
+      flex: 1;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .stat-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: #1f2937;
+    }
+
+    .chart-container {
+      padding: 24px;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(0, 168, 120, 0.05));
+      border-radius: 12px;
+      min-height: 450px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .breakdown-container {
+      padding: 24px;
+    }
+
+    .breakdown-container h3 {
+      margin-bottom: 20px;
+      font-size: 18px;
+      color: #1f2937;
+    }
+
+    .severity-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+    }
+
+    .severity-breakdown-card {
+      background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+      border-radius: 8px;
+      padding: 16px;
+      border-left: 4px solid #6366f1;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .severity-breakdown-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .severity-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .severity-level {
+      font-size: 14px;
+      font-weight: 700;
+      color: #1f2937;
+    }
+
+    .accuracy-badge {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .disease-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .disease-chip {
+      background: white;
+      border: 1px solid #e5e7eb;
+      color: #4b5563;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    .disease-count {
+      font-size: 12px;
+      color: #6b7280;
+      text-align: right;
+    }
+
+    .info-container {
+      padding: 24px;
+    }
+
+    .info-container h3 {
+      margin-bottom: 20px;
+      font-size: 18px;
+      color: #1f2937;
+    }
+
+    .info-grid {
+      margin-bottom: 20px;
+    }
+
+    .info-item {
+      margin-bottom: 16px;
+    }
+
+    .info-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #6b7280;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+
+    .info-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .info-badge {
+      background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+      color: #0c4a6e;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .dataset-note {
+      background: rgba(99, 102, 241, 0.05);
+      border-left: 4px solid #6366f1;
+      padding: 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      color: #374151;
+      line-height: 1.6;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+  <script>
+    const chartData = {{ chart_data | tojson }};
+    
+    // Prepare data for Chart.js
+    const labels = chartData.map(item => item.severity);
+    const accuracyData = chartData.map(item => item.accuracy);
+    
+    // Color scheme for severity levels
+    const colorMap = {
+      'Mild': '#10b981',
+      'Mild-Moderate': '#84cc16',
+      'Moderate': '#f59e0b',
+      'Moderate-Severe': '#f97316',
+      'Severe': '#dc2626'
+    };
+    
+    const backgroundColors = labels.map(label => colorMap[label] || '#6366f1');
+    const borderColors = labels.map(label => colorMap[label] || '#6366f1');
+
+    const ctx = document.getElementById('severityAccuracyChart').getContext('2d');
+    const chart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Prediction Accuracy (%)',
+          data: accuracyData,
+          backgroundColor: backgroundColors,
+          borderColor: borderColors,
+          borderWidth: 2,
+          borderRadius: 6,
+          borderSkipped: false,
+          maxBarThickness: 25,
+          hoverBackgroundColor: backgroundColors.map(c => c + 'dd'),
+          hoverBorderWidth: 3,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        indexAxis: 'y',
+        plugins: {
+          legend: {
+            display: true,
+            labels: {
+              font: { size: 12, weight: 600 },
+              color: '#374151',
+              usePointStyle: true,
+              padding: 15,
+            }
+          },
+          tooltip: {
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            titleColor: '#fff',
+            bodyColor: '#fff',
+            borderColor: '#fff',
+            borderWidth: 1,
+            padding: 12,
+            displayColors: true,
+            callbacks: {
+              label: function(context) {
+                return 'Accuracy: ' + context.parsed.x + '%';
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            beginAtZero: true,
+            max: 100,
+            ticks: {
+              callback: function(value) {
+                return value + '%';
+              },
+              font: { size: 11, weight: 500 },
+              color: '#6b7280'
+            },
+            grid: {
+              color: 'rgba(0, 0, 0, 0.05)',
+              drawBorder: false
+            }
+          },
+          y: {
+            ticks: {
+              font: { size: 12, weight: 600 },
+              color: '#374151'
+            },
+            grid: {
+              display: false,
+              drawBorder: false
+            }
+          }
+        }
+      }
+    });
+  </script>
+{% endblock %}

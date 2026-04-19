@@ -25,7 +25,6 @@
 
       <nav class="sidebar-nav">
         <a class="nav-link {% if current_page == 'dashboard' %}active{% endif %}" href="{{ url_for('dashboard') }}">Home</a>
-        <a class="nav-link {% if current_page == 'chat' %}active{% endif %}" href="{{ url_for('chat') }}">Chatbot</a>
         <a class="nav-link {% if current_page == 'prediction' %}active{% endif %}" href="{{ url_for('prediction') }}">Disease Prediction</a>
         <a class="nav-link {% if current_page == 'history' %}active{% endif %}" href="{{ url_for('history') }}">History</a>
         <a class="nav-link {% if current_page == 'analytics' %}active{% endif %}" href="{{ url_for('analytics') }}">Analytics</a>

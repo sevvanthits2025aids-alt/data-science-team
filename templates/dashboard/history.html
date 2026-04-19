@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <section class="section-panel glass-card">
+    <div class="section-header">
+      <div>
+        <p class="eyebrow">Prediction History</p>
+        <h2>Your stored prediction records</h2>
+      </div>
+    </div>
+
+    {% if records %}
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Timestamp</th>
+              <th>Symptoms</th>
+              <th>Prediction</th>
+              <th>Confidence</th>
+              <th>Risk</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in records %}
+              <tr>
+                <td>{{ item.timestamp }}</td>
+                <td>{{ item.symptoms }}</td>
+                <td>{{ item.predicted_disease }}</td>
+                <td>{{ item.confidence }}</td>
+                <td><span class="badge {{ item.risk_level | lower }}">{{ item.risk_level }}</span></td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <p class="muted-text">No history yet. Make a prediction or chat with the AI assistant to record results.</p>
+    {% endif %}
+  </section>
+{% endblock %}

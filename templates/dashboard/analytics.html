@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block head %}
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+
+{% block content %}
+  <section class="section-panel glass-card">
+    <div class="section-header">
+      <div>
+        <p class="eyebrow">Analytics</p>
+        <h2>Prediction trends and risk distribution</h2>
+      </div>
+    </div>
+
+    <div class="chart-grid">
+      <div class="chart-card glass-card">
+        <p class="card-label">Most common diseases</p>
+        <canvas id="diseaseChart"></canvas>
+      </div>
+
+      <div class="chart-card glass-card">
+        <p class="card-label">Risk level breakdown</p>
+        <canvas id="riskChart"></canvas>
+      </div>
+
+      <div class="chart-card glass-card full-width">
+        <p class="card-label">Prediction trend</p>
+        <canvas id="trendChart"></canvas>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+
+{% block scripts %}
+  <script>
+    const diseaseLabels = {{ disease_labels | tojson | safe }};
+    const diseaseData = {{ disease_values | tojson | safe }};
+    const riskLabels = {{ risk_labels | tojson | safe }};
+    const riskData = {{ risk_values | tojson | safe }};
+    const trendLabels = {{ trend_labels | tojson | safe }};
+    const trendData = {{ trend_values | tojson | safe }};
+
+    function createChart(ctx, type, labels, data, color) {
+      return new Chart(ctx, {
+        type,
+        data: {
+          labels,
+          datasets: [{
+            label: '',
+            data,
+            backgroundColor: color,
+            borderColor: color,
+            borderWidth: 1,
+            fill: type === 'line',
+          }],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          layout: { padding: 8 },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              bodyFont: { size: 11 },
+              titleFont: { size: 12 },
+              padding: 10,
+            },
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: { color: 'rgba(255,255,255,0.1)' },
+              ticks: { color: '#dce4ff', font: { size: 10 } },
+            },
+            x: {
+              grid: { color: 'rgba(255,255,255,0.1)' },
+              ticks: { color: '#dce4ff', font: { size: 10 } },
+            },
+          },
+        },
+      });
+    }
+
+    createChart(document.getElementById('diseaseChart'), 'bar', diseaseLabels, diseaseData, 'rgba(108,144,255,0.82)');
+    createChart(document.getElementById('riskChart'), 'doughnut', riskLabels, riskData, ['#7d6dff','#6c90ff','#82f0b4']);
+    createChart(document.getElementById('trendChart'), 'line', trendLabels, trendData, 'rgba(168,145,255,0.96)');
+  </script>
+{% endblock %}

@@ -1,0 +1,59 @@
+# 🚫 Python Cache & Compiled Files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+*.whl
+
+# 🧪 Testing & Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.hypothesis/
+
+# 🔍 Type Checking & Linting
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+
+# 💾 IDE & Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# 📝 Temporary & Log Files
+*.log
+*.tmp
+*.bak
+*.cache
+.env.local
+.env.*.local
+
+# 🔐 Sensitive Information
+.env
+secrets.json
+credentials.json
+passwords.txt
+
+# 📊 Backup Files (created by cleanup script)
+.cleanup_backups/
+
+# 🗂️ Project-specific ignores (keep important files)
+# ✅ DO NOT ignore important project files:
+# - *.csv, *.json (datasets and configs)
+# - *.pkl (trained models)
+# - *.py (source code)
+# - *.html (templates)
+# - *.md (documentation)
+

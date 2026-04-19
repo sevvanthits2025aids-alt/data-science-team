@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify, flash
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from main import (
+from backend.main import (
     choose_advice,
     clean_input,
     ensure_users_file,
@@ -17,9 +17,9 @@ from main import (
     update_password,
 )
 
-from vaccine import get_vaccine_info, list_available_vaccines
-from disease_analyzer import create_analyzer
-from medical_dataset import get_severity_accuracy_data, get_statistics
+from backend.vaccine import get_vaccine_info, VACCINE_DATABASE
+from backend.disease_analyzer import create_analyzer
+from backend.medical_dataset import get_severity_accuracy_data, get_statistics
 
 app = Flask(__name__, static_folder="static", template_folder="templates")
 app.secret_key = "replace-with-a-secure-random-key"
@@ -58,7 +58,7 @@ def login():
 
         flash("Invalid username or password.")
 
-    return render_template("login.html")
+    return render_template("auth/login.html")
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -81,7 +81,7 @@ def register():
                 flash("Account created successfully. Please log in.")
                 return redirect(url_for("login"))
 
-    return render_template("register.html")
+    return render_template("auth/register.html")
 
 
 @app.route("/logout")
@@ -97,7 +97,7 @@ def dashboard():
 
     metrics = get_metrics(session["username"])
     return render_template(
-        "dashboard.html",
+        "dashboard/dashboard.html",
         page_title="Dashboard",
         section_title="Overview",
         current_page="dashboard",
@@ -108,27 +108,13 @@ def dashboard():
     )
 
 
-@app.route("/chat")
-def chat():
-    if not authenticated():
-        return redirect(url_for("login"))
-
-    return render_template(
-        "chat.html",
-        page_title="Chatbot",
-        section_title="Live assistant",
-        current_page="chat",
-        username=session["username"],
-    )
-
-
 @app.route("/prediction")
 def prediction():
     if not authenticated():
         return redirect(url_for("login"))
 
     return render_template(
-        "prediction.html",
+        "prediction/prediction.html",
         page_title="Disease Prediction",
         section_title="Symptom analysis",
         current_page="prediction",
@@ -143,7 +129,7 @@ def history():
 
     records = list(reversed(load_history_records(session["username"])))
     return render_template(
-        "history.html",
+        "dashboard/history.html",
         page_title="History",
         section_title="Saved sessions",
         current_page="history",
@@ -161,7 +147,7 @@ def analytics():
     analytics_data = get_analytics_data(history_items)
 
     return render_template(
-        "analytics.html",
+        "dashboard/analytics.html",
         page_title="Analytics",
         section_title="Health trends",
         current_page="analytics",
@@ -181,12 +167,11 @@ def vaccine():
         return redirect(url_for("login"))
 
     # Get all diseases from the vaccine database for the dropdown
-    from vaccine import VACCINE_DATABASE
     all_diseases = sorted(VACCINE_DATABASE.keys())
     disease_list = [disease.title() for disease in all_diseases]
     
     return render_template(
-        "vaccine.html",
+        "vaccine/vaccine.html",
         page_title="Vaccine Info",
         section_title="Immunization lookup",
         current_page="vaccine",
@@ -219,7 +204,7 @@ def profile():
 
     metrics = get_metrics(session["username"])
     return render_template(
-        "profile.html",
+        "dashboard/profile.html",
         page_title="Profile Settings",
         section_title="Account security",
         current_page="profile",
@@ -334,7 +319,7 @@ def severity_accuracy_chart():
             })
     
     return render_template(
-        "analytics.html",
+        "dashboard/analytics.html",
         page_title="Disease Severity vs Accuracy Analytics",
         section_title="Prediction accuracy by disease severity",
         current_page="analytics",
